@@ -23,6 +23,7 @@ This repo holds both versions: **v2**, the board in use today, and **v3**, a ful
 |---|---|
 | v2 (PCB rev 6) | built and running in the house |
 | v3 | schematic done, PCB placed and routed, DRC clean. Next: stitching vias, silkscreen, final review. **Not ordered.** |
+| v3 enclosure | planned: 3D printable, designed around the v3 board, source in [`mechanical/`](mechanical). Starts once the PCB layout is final |
 
 ## Two uses for v3
 
@@ -94,6 +95,7 @@ Same idea and same D1 mini, new board. Every v2 known issue is addressed.
 | Silkscreen | reference designators | plain words: `12V IN`, `FAN 1 (RPM)`, `PIPE SENSOR 1`, wire colours |
 | BOM | part fields wrong in places (R3 linked to a 300 mΩ shunt) | every part with a checked LCSC number |
 | Board | 74 × 53 mm | 67.5 × 56 mm, everything flat, nothing under the D1 mini |
+| Enclosure | separate FreeCAD design, does not fit v3 | new printable enclosure in this repo (planned): cable exits, LED windows, room for the antenna |
 
 ### Firmware is not interchangeable
 
@@ -115,7 +117,7 @@ Don't want to order PCBs and solder one yourself? I can supply a board. Send me 
 
 Say how many boards you need, how many fans per board, and whether you want it with the D1 mini flashed. Version, price and shipping on request.
 
-Boards are supplied as **development boards**, not as a finished consumer product: no enclosure, no CE marking. You fit and use them at your own risk. v3 boards carry this on the top silkscreen.
+Boards are supplied as **development boards**, not as a finished consumer product: no CE marking, and no enclosure until the v3 enclosure is released (you can then print it yourself). You fit and use them at your own risk. v3 boards carry this on the top silkscreen.
 
 ## Repo layout
 
@@ -124,7 +126,7 @@ Boards are supplied as **development boards**, not as a finished consumer produc
 | [`docs/schematic-v3.md`](docs/schematic-v3.md) | v3 spec: decisions, nets, BOM with LCSC numbers, layout notes. Source of truth for the schematic |
 | [`docs/v2-as-built.md`](docs/v2-as-built.md) | v2 netlist, pinouts, BOM and known issues, extracted from the EasyEDA project |
 | [`docs/ds18b20-pipe-holder.md`](docs/ds18b20-pipe-holder.md) | 3D printed holder that ties the probes onto the radiator collector |
-| [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder |
+| [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder; the v3 enclosure will be added here |
 | [`docs/DBH-v1-parked.md`](docs/DBH-v1-parked.md) | parked fallback: driver board that keeps the original Jaga fans |
 | [`hardware/v2/`](hardware/v2) | v2 EasyEDA Pro project, Gerbers (upload to JLCPCB as is), PCB render |
 | [`hardware/v3/`](hardware/v3) | v3 EasyEDA project, Gerbers and render, once exported |

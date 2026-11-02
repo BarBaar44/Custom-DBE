@@ -84,7 +84,7 @@ Don't want to order PCBs and solder one yourself? I can supply a board. Send me 
 
 Say how many boards you need, how many fans per board, and whether you want it with the D1 mini flashed. Version, price and shipping on request.
 
-Boards are supplied as **development boards**, not as a finished consumer product: no enclosure, no CE marking. You fit and use them at your own risk. v3 boards carry this on the silkscreen.
+Boards are supplied as **development boards**, not as a finished consumer product: no enclosure, no CE marking. You fit and use them at your own risk. v3 boards carry this on the top silkscreen.
 
 ## Repo layout
 

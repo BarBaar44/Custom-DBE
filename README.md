@@ -2,11 +2,11 @@
 
 **DBE** is a small board that drives 12 V PC fans on a radiator from Home Assistant. A Wemos D1 mini (ESP8266, ESPHome) switches fan power, sets fan speed over PWM, reads fan RPM and reads two DS18B20 pipe sensors (supply and return). The firmware uses those temperatures to run the fans only when the radiator is warm, and faster when the water comes back too warm (small delta T).
 
-This repo holds **DBE v3**, a full redesign of the board. v2 stays where it is.
+This repo holds both versions: **v2**, the board in use today, and **v3**, a full redesign.
 
 | | Where |
 |---|---|
-| v2 hardware (as built, in use) | [BarBaar44/EasyEDA](https://github.com/BarBaar44/EasyEDA): EasyEDA Pro project, Gerbers, PCB render |
+| v2 hardware (as built, in use) | [`hardware/v2/`](hardware/v2): EasyEDA Pro project, Gerbers, PCB render (moved from [BarBaar44/EasyEDA](https://github.com/BarBaar44/EasyEDA)) |
 | v2 documentation, checked against the project file | [`docs/v2-as-built.md`](docs/v2-as-built.md) |
 | Firmware and control logic | [BarBaar44/ESPHome, `DBE/`](https://github.com/BarBaar44/ESPHome/tree/main/DBE) |
 | Heating system it belongs to | [BarBaar44/thermostat](https://github.com/BarBaar44/thermostat) |
@@ -21,7 +21,7 @@ This repo holds **DBE v3**, a full redesign of the board. v2 stays where it is.
 
 ## How v2 works
 
-![DBE v2 PCB](https://raw.githubusercontent.com/BarBaar44/EasyEDA/main/PCB_PCB_DBE%20MosFet_6_2026-08-08.png)
+![DBE v2 PCB](hardware/v2/PCB_PCB_DBE%20MosFet_6_2026-08-08.png)
 
 1. **12 V in** on a barrel jack.
 2. An **LM2596 buck module** makes 5 V for the D1 mini; the D1 mini's own regulator makes 3.3 V.
@@ -84,4 +84,9 @@ Details in [`docs/schematic-v3.md`](docs/schematic-v3.md#firmware-impact-dbemain
 | [`docs/ds18b20-pipe-holder.md`](docs/ds18b20-pipe-holder.md) | 3D printed holder that ties the probes onto the radiator collector |
 | [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder |
 | [`docs/DBH-v1-parked.md`](docs/DBH-v1-parked.md) | parked fallback: driver board that keeps the original Jaga fans |
-| `hardware/` | EasyEDA project, Gerbers and render, once v3 is exported |
+| [`hardware/v2/`](hardware/v2) | v2 EasyEDA Pro project, Gerbers (upload to JLCPCB as is), PCB render |
+| [`hardware/v3/`](hardware/v3) | v3 EasyEDA project, Gerbers and render, once exported |
+
+## License
+
+[MIT](LICENSE)

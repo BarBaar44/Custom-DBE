@@ -2,7 +2,7 @@
 
 > This documents **v2** (PCB rev 6, as built). The **v3** rebuild is specified in [`schematic-v3.md`](schematic-v3.md).
 
-The v2 design files (EasyEDA Pro project, Gerbers, render) live in **[BarBaar44/EasyEDA](https://github.com/BarBaar44/EasyEDA)**. This file replaces the README there as the reference: it was extracted from the `.epro2` project (PCB netlist, device records) and the Gerber package, not from memory. Where the project disagrees with itself, that is listed under [Known issues](#known-issues-for-the-next-revision).
+The v2 design files (EasyEDA Pro project, Gerbers, render) are in [`hardware/v2/`](../hardware/v2), moved from [BarBaar44/EasyEDA](https://github.com/BarBaar44/EasyEDA). This file replaces the README there as the reference: it was extracted from the `.epro2` project (PCB netlist, device records) and the Gerber package, not from memory. Where the project disagrees with itself, that is listed under [Known issues](#known-issues-for-the-next-revision).
 
 An ESP8266 (Wemos D1 mini) running ESPHome switches 12 V PC fans fully on/off with a relay, sets their speed over PWM, reads fan RPM and reads two DS18B20 pipe sensors.
 
@@ -41,7 +41,7 @@ D6 ── P1.1 PWM          D5 ── P1.2 tach ── U7 ── 3V3          D1
 * SMD on top: R1 (0603), U5 (1206), R3 (2512). Everything else through hole.
 * All tracks are 0.254 mm (10 mil). See known issues.
 
-![PCB layout](https://raw.githubusercontent.com/BarBaar44/EasyEDA/main/PCB_PCB_DBE%20MosFet_6_2026-08-08.png)
+![PCB layout](../hardware/v2/PCB_PCB_DBE%20MosFet_6_2026-08-08.png)
 
 ## Connectors
 
@@ -133,7 +133,7 @@ Power GND and logic GND are separate nets on the PCB and only meet inside the LM
 
 ## Manufacturing
 
-`Gerber_PCB_DBE_MosFet_6_2026-08-08.zip` in the [EasyEDA repo](https://github.com/BarBaar44/EasyEDA) holds Gerbers (copper, silk, mask, top paste, outline, document), PTH/NPTH/via drills and a JLCPCB flying probe file. Upload the zip as is to JLCPCB. Hand assembly is assumed: the stored BOM is not clean enough for PCBA (issues 3 and 4).
+[`Gerber_PCB_DBE_MosFet_6_2026-08-08.zip`](../hardware/v2/Gerber_PCB_DBE_MosFet_6_2026-08-08.zip) holds Gerbers (copper, silk, mask, top paste, outline, document), PTH/NPTH/via drills and a JLCPCB flying probe file. Upload the zip as is to JLCPCB. Hand assembly is assumed: the stored BOM is not clean enough for PCBA (issues 3 and 4).
 
 Assembly order: SMD resistors, diodes (stripe = K, check D2 and D3 orientation against silk), Q2 (flat face per silk), relay, connectors, LM2596 module (adjust to 5 V first), D1 mini last.
 
@@ -162,3 +162,4 @@ Firmware side, not PCB: PWM runs at 1 kHz; the Intel fan spec is 25 kHz. Some fa
 * **2025-01-06** Initial project upload (`ProPrj_DBE MosFet_15F_2025-01-06.epro`).
 * **2026-08-08** Project export `.epro2`, Gerbers and render, PCB rev 6.
 * **2026-10-29** README rebuilt from the project file: netlist, pinouts, BOM, known issues. Earlier README called U2/U4 fan headers; they are the DS18B20 terminals.
+* **2026-11-02** Design files moved from BarBaar44/EasyEDA to `hardware/v2/` in this repo.

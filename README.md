@@ -38,7 +38,7 @@ This repo holds both versions: **v2**, the board in use today, and **v3**, a ful
 D6 ── fan PWM      D5 ── fan tach      D1 ── DS18B20 ×2 (one bus)
 ```
 
-It works, but has real flaws: every track is 0.254 mm while up to 2.4 A flows through it, the barrel jack is rated 0.5 A, the OneWire bus runs at 5 V on a 3.3 V pin, the relay clicks audibly, and the two grounds only meet inside the buck module. Full list in [`docs/v2-as-built.md`](docs/v2-as-built.md#known-issues-for-the-next-revision).
+It works, but has real flaws: every track is 0.254 mm while up to 2.4 A flows through it, the OneWire bus runs at 5 V on a 3.3 V pin, the relay clicks audibly, and the two grounds only meet inside the buck module. Full list in [`docs/v2-as-built.md`](docs/v2-as-built.md#known-issues-for-the-next-revision).
 
 ## What changes in v3
 
@@ -48,7 +48,7 @@ Same idea and same D1 mini, new board. Every v2 known issue is addressed.
 |---|---|---|
 | Fan power switch | relay (clicks, 0.6 W coil heat, wears) | high side P-FET (AO4407A) via BC337: silent, about 0.12 W at 2.4 A. On/off only, never PWM |
 | 5 V supply | LM2596 plug-in module | AP63205 buck on the board |
-| Power input | 0.5 A barrel jack, no protection | 5 A barrel jack **or** 2 pin screw terminal (for bare PSU leads), 4 A PTC fuse, reverse polarity P-FET, bulk caps |
+| Power input | barrel jack (5 A part fitted), no protection | 5 A barrel jack **or** 2 pin screw terminal (for bare PSU leads), 4 A PTC fuse, reverse polarity P-FET, bulk caps |
 | Copper | all tracks 0.254 mm, no pour | wide power tracks, GND pour on both layers |
 | Ground | two nets, joined only inside the module | one GND net on the board |
 | Logic levels | OneWire bus on 5 V | everything at 3.3 V |

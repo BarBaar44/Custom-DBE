@@ -248,7 +248,7 @@ Boot behaviour: R7 holds Q3 off, so PWM floats high (100 %) until firmware runs.
 
 ## Open points
 
-1. J1: the v2 jack (DC-005-20A, C136744) is rated 0.5 A only; replaced by a 5 A part. The 2.0 mm pin is the common pairing for 5.5 × 2.1 mm adapter plugs; test fit with your adapter.
+1. J1: the v2 project links a 0.5 A jack (DC-005-20A, C136744), but the boards were built with a 5 A jack. v3 uses a checked 5 A part (C381116). The 2.0 mm pin is the common pairing for 5.5 × 2.1 mm adapter plugs; test fit with your adapter.
 2. F1 (RUEF400) is 19.3 mm tall plus leads; check enclosure height or bend it over (then keep a 14 × 20 mm area free beside it).
 3. ~~K1 pinout~~ closed 2026-10-31: relay replaced by Q4 (decision 4).
 4. Optional: TVS (SMBJ15A) on `VIN_12V` for hot plugging. Not included yet.

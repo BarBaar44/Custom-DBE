@@ -45,7 +45,7 @@ D6 ── P1.1 PWM          D5 ── P1.2 tach ── U7 ── 3V3          D1
 
 ## Connectors
 
-### DC2: 12 V input (DC-005-20A, LCSC C136744)
+### DC2: 12 V input (5 A barrel jack fitted; the project links a different part, see issue 9)
 | Pin | Net |
 |---|---|
 | 1 (centre) | +12 V |
@@ -127,13 +127,13 @@ Power GND and logic GND are separate nets on the PCB and only meet inside the LM
 | U5 | 10 kΩ | 1206 | C5141115 | base pull-down |
 | U7 | **see issue 4** | THT 2.4 × 6.3 mm | C3429539 | tach pull-up |
 | R1 | 4.7 kΩ | 0603 | | OneWire pull-up |
-| DC2 | DC-005-20A | | C136744 | rated 0.5 A only, see issue 9 |
+| DC2 | DC-005-20A | | C136744 | linked part is rated 0.5 A; the fitted jack is 5 A, see issue 9 |
 | P1 | KF2510 4 pin | | C61409 | |
 | U2, U4 | YO0301500000G | | C2683167 | |
 
 ## Manufacturing
 
-[`Gerber_PCB_DBE_MosFet_6_2026-08-08.zip`](../hardware/v2/Gerber_PCB_DBE_MosFet_6_2026-08-08.zip) holds Gerbers (copper, silk, mask, top paste, outline, document), PTH/NPTH/via drills and a JLCPCB flying probe file. Upload the zip as is to JLCPCB. Hand assembly is assumed: the stored BOM is not clean enough for PCBA (issues 3 and 4).
+[`Gerber_PCB_DBE_MosFet_6_2026-08-08.zip`](../hardware/v2/Gerber_PCB_DBE_MosFet_6_2026-08-08.zip) holds Gerbers (copper, silk, mask, top paste, outline, document), PTH/NPTH/via drills and a JLCPCB flying probe file. Upload the zip as is to JLCPCB. Hand assembly is assumed: the stored BOM is not clean enough for PCBA (issues 3, 4 and 9).
 
 Assembly order: SMD resistors, diodes (stripe = K, check D2 and D3 orientation against silk), Q2 (flat face per silk), relay, connectors, LM2596 module (adjust to 5 V first), D1 mini last.
 
@@ -153,7 +153,7 @@ Ordered by importance. All of them are addressed in [v3](schematic-v3.md).
 6. **D0 at boot.** GPIO16 is commonly reported to go high briefly at boot, which may pulse the relay and fans on reset. Verify on a board; if it happens, move the relay to D1 or D2 (and OneWire elsewhere) or accept it.
 7. **Fan connector:** pad numbering differs from the fan standard, but the physical pinout is correct and works. Keep this part (right angle, connector on the side).
 8. **Size reduction idea** (from the forum): replace the LM2596 module with a small fixed 5 V buck module. Only when boards need replacing.
-9. **DC jack DC2 is rated 0.5 A.** With 15 fans (about 2.4 A) it runs far over spec. v3 uses a 5 A jack.
+9. **DC2 part mismatch.** The project links DC-005-20A (C136744), whose datasheet rates it at 0.5 A. The jack actually fitted on the built boards is a 5 A part, so the boards are fine at 2.4 A. Fix: correct the device in the project before any v2 reorder. v3 uses a checked 5 A part (C381116).
 
 Firmware side, not PCB: PWM runs at 1 kHz; the Intel fan spec is 25 kHz. Some fans whine at 1 kHz.
 

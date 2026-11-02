@@ -2,6 +2,11 @@
 
 **DBE** is a small board that drives 12 V PC fans on a radiator from Home Assistant. A Wemos D1 mini (ESP8266, ESPHome) switches fan power, sets fan speed over PWM, reads fan RPM and reads two DS18B20 pipe sensors (supply and return). The firmware uses those temperatures to run the fans only when the radiator is warm, and faster when the water comes back too warm (small delta T).
 
+v3 is built for two jobs:
+
+1. **Custom booster fans** on any radiator: PC fans mounted under or behind it.
+2. **Jaga controller replacement**: take out the Jaga controller and its fans, fit PWM PC fans, and run the radiator from Home Assistant.
+
 This repo holds both versions: **v2**, the board in use today, and **v3**, a full redesign.
 
 | | Where |
@@ -18,6 +23,34 @@ This repo holds both versions: **v2**, the board in use today, and **v3**, a ful
 |---|---|
 | v2 (PCB rev 6) | built and running in the house |
 | v3 | schematic done, PCB placed and routed, DRC clean. Next: stitching vias, silkscreen, final review. **Not ordered.** |
+
+## Two uses for v3
+
+### 1. Custom booster fans
+
+Fit 12 V PWM PC fans under or behind an ordinary radiator. Up to 20 fans (2.4 A) in three daisy chains, powered from a 12 V adapter on the barrel jack. Two pipe sensors on supply and return tell the firmware when to run and how fast. This is what DBE was built for.
+
+### 2. Replacing the Jaga controller
+
+Jaga fan convector radiators (such as the Vertiga) come with a controller that offers a few fixed speeds and, on some models, no water temperature sensor at all. v3 replaces it:
+
+| | Jaga as supplied | Jaga with DBE v3 |
+|---|---|---|
+| Control | manual, 3 fixed speeds | Home Assistant, continuous speed |
+| Speed decided by | the user | supply and return water temperature |
+| Fans | 2 wire ADDA fans via GS-D driver boards | 4 wire PWM PC fans (Arctic P9 or P12 PWM PST), daisy chained |
+| Feedback | none | fan RPM, both water temperatures, WiFi signal |
+| Off | speed signal to 0 V | fan power fully cut |
+
+What changes at the radiator:
+
+* Jaga controller, GS-D driver boards and ADDA fans come out. Keep them: you can go back.
+* PWM PST fans of the same frame size (92 or 120 × 25 mm) go in. Check screw holes and airflow direction against the originals.
+* The Jaga Mean Well PSU stays. Its bare leads go into the screw terminal (fit J7 instead of the barrel jack); reverse polarity protection is on the board.
+* Two DS18B20 probes on the supply and return collectors, with the [cable tie holder](docs/ds18b20-pipe-holder.md).
+* The steel housing can weaken WiFi: test the signal first. The D1 mini Pro (external antenna) fits the same footprint.
+
+Same board and same firmware as the booster fan setup. Planned installations (v3 not built yet): a Jaga unit with 20 × 92 mm fans and a Jaga Vertiga 053 with 4 × 120 mm fans (see [`docs/schematic-v3.md`](docs/schematic-v3.md#installations)).
 
 ## How v2 works
 
@@ -61,8 +94,6 @@ Same idea and same D1 mini, new board. Every v2 known issue is addressed.
 | Silkscreen | reference designators | plain words: `12V IN`, `FAN 1 (RPM)`, `PIPE SENSOR 1`, wire colours |
 | BOM | part fields wrong in places (R3 linked to a 300 mΩ shunt) | every part with a checked LCSC number |
 | Board | 74 × 53 mm | 67.5 × 56 mm, everything flat, nothing under the D1 mini |
-
-v3 also replaces the Jaga controllers on two Jaga radiators, after their fans are swapped for Arctic PWM PST fans. One board and one firmware for every radiator in the house.
 
 ### Firmware is not interchangeable
 

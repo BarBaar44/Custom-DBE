@@ -27,6 +27,7 @@ Related: [`v2-as-built.md`](v2-as-built.md) (v2 as built), [`DBH-v1-parked.md`](
 | 15 | Silkscreen in plain words at every connector | no reference designators near connectors |
 | 16 | PC fans only. The Jaga radiators are converted to Arctic PWM PST fans and use this board; the Jaga controller, driver boards and fans come out (kept for going back). DBH board parked | one board design and one firmware for every radiator; quieter fans, RPM feedback, real low speed range |
 | 17 | Power input: J1 barrel jack **or** J7 2-pin 5.08 mm screw terminal, same nets, fit one; footprints overlap so both cannot be fitted | the Jaga radiators have a Mean Well PSU with bare leads; two fitted inputs could short two supplies in series |
+| 18 | Board marked as a development board on the silk (bottom layer): `DBE v3.0 DEVELOPMENT BOARD` / `Not a finished consumer product. For development and evaluation only.` | boards are sold or given to others; marks it as a dev board rather than a finished product |
 
 ## Installations
 
@@ -242,6 +243,7 @@ Boot behaviour: R7 holds Q3 off, so PWM floats high (100 %) until firmware runs.
 * Keep the D1 mini antenna end over no copper, at the board edge (or overhanging it). Place the D1 mini so a D1 mini Pro u.FL pigtail can leave the enclosure at that edge.
 * J1 and J7 on the same edge with **overlapping footprints**: the body of one covers the pads or body of the other, so only one can be fitted. Reason: with both fitted, J7 wired reversed while J1 is plugged in puts the two supplies in series, shorted through `VIN_RAW` and `GND`; F1 and Q1 are not in that loop. Courtyard overlap of J1/J7 is intentional: mark it as a DRC exception.
 * Silk, plain words: `12V IN` (with centre + symbol at J1, `+` / `−` at J7), `FAN 1 (RPM)`, `FAN 2`, `FAN 3`, `PIPE SENSOR 1`, `PIPE SENSOR 2`, `POWER` and `FANS ON` at the LEDs. No reference designators next to connectors.
+* Dev board marking (decision 18), bottom silk, clear of pads and vias: `DBE v3.0 DEVELOPMENT BOARD` (about 1.5 mm text) with `Not a finished consumer product. For development and evaluation only.` below it (about 1.0 mm).
 * LEDs where they are visible through the enclosure (or plan light pipes).
 * All connectors on one or two board edges, so cables leave the enclosure tidily.
 * Layout: flat, nothing under the D1 mini (decided 2026-10-31). Board **67.5 × 56 mm** (placement done 2026-11-01). Mounting holes M2 (2.2 mm, unplated, 5 mm keep-out): (3.5, 17), (64, 3.5), (3.5, 52.5), (64, 52.5). Fan headers 2.5 mm apart. Cables leave around the bottom left corner: J1 and J4/J5 on the left edge, J7 and fan headers on the bottom edge. D1 mini antenna flush with the right edge, with a no-copper keep-out on both layers. The enclosure needs a new version.

@@ -75,6 +75,15 @@ v3 needs firmware changes and a v2 board with v3 firmware drives the wrong pin:
 
 Details in [`docs/schematic-v3.md`](docs/schematic-v3.md#firmware-impact-dbemainyml).
 
+## Get a board
+
+Don't want to order PCBs and solder one yourself? I can supply a board. Send me a message:
+
+* open an [issue on this repo](https://github.com/BarBaar44/Custom-DBE/issues/new?title=Board%20request), or
+* send a private message to **beurdy** on the [Home Assistant Community forum](https://community.home-assistant.io/u/beurdy)
+
+Say how many boards you need, how many fans per board, and whether you want it with the D1 mini flashed. Version, price and shipping on request.
+
 ## Repo layout
 
 | Path | Content |

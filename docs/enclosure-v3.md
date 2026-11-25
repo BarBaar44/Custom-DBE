@@ -19,14 +19,14 @@ The .scad was rebuilt on 2026-11-25 from the STLs of 2026-11-03, because the ori
 
 | Item | Value |
 |---|---|
-| Outer size | 71.7 × 60.2 × 27.8 mm (21.8 mm until 2026-11-25) |
+| Outer size | 71.7 × 60.2 × 29.8 mm (21.8 mm until 2026-11-25) |
 | Walls, floor, lid | 1.6 mm; board to wall gap 0.5 mm |
 | Lid | flush in a 0.8 mm rebate, 4 snap hooks (top ×2, left at y 16.5, right at y 6) in the mounting hole keep-out zones; release with a small screwdriver through the window |
 | Board fix | no screws: pegs in the base through the M2 holes, lid columns press the board down (column at (64, 3.5) is 3.4 mm, because J6 is close) |
 | Connector slots | open to the top so the board drops in; lid tabs close them 0.3 mm above each connector. J4/J5 share one slot, J2/J3/J6 share one slot |
 | Power input | `power_in = "J1"`: 11 mm slot in the left wall, `12V IN` label along the left edge. `power_in = "J7"`: 11 mm slot in the bottom wall at x 18, joined with the fan slot (only 0.4 mm of wall would be left between them), `12V IN` label next to FAN 1. The other input's wall stays closed |
 | Labels | engraved in the lid: 12V IN, S1 (J4), S2 (J5), FAN 1 + RPM, FAN 2, FAN 3, DBE v3 |
-| Height budget | 20 mm above the board (`top_clear`), set by F1 standing upright: Littelfuse RUEF400 (C2760163), datasheet B max 19.3 mm, width A 14.0 mm, thickness E 3.0 mm, plus 0.7 mm air. Was 14 mm with F1 bent over; raised 2026-11-25 because F1 did not fit |
+| Height budget | 22 mm above the board (`top_clear`), set by F1 standing upright: Littelfuse RUEF400 (C2760163), datasheet B max 19.3 mm (width A 14.0, thickness E 3.0), sitting about 2 mm above the board on its leads (board 1), plus 0.7 mm air. Was 14 mm with F1 bent over; raised 2026-11-25 because F1 did not fit |
 | Material | PETG or ASA; base upright, lid top face down, no supports |
 
 ## D1 mini socketed (requirement, 2026-11-21)
@@ -40,7 +40,7 @@ The D1 mini sits in 2 × 8 female headers, not soldered, so it stays easy to rep
 
 ## Open points
 
-1. ~~F1 bent over~~ closed 2026-11-25: F1 stays upright, `top_clear = 20`, box 27.8 mm tall. Snap hooks and their windows follow the lid height (`hook_len`). 19.3 mm assumes F1 is pushed down until its coating touches the board; if it sits higher, set `f1_height` to the measured height.
+1. ~~F1 bent over~~ closed 2026-11-25: F1 stays upright, `top_clear = 22`, box 29.8 mm tall. Snap hooks and their windows follow the lid height (`hook_len`). F1 does not seat on the board; it floats on its leads. Fit it at about 2 mm (`f1_standoff`) on boards 2 to 5 too, or change `f1_standoff`.
 2. J1 opening appears to sit about 2.8 mm in from the board edge. Check that the adapter plug seats fully through the 11 mm slot.
 3. Check part heights against the real parts: J1, J7 (8 mm assumed), J4/J5 with plugs, KF2510 headers, D1 mini on its headers.
 4. S1/S2 labels assume J4 = PIPE SENSOR 1 and J5 = PIPE SENSOR 2; check against the silkscreen.

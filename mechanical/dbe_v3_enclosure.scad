@@ -23,7 +23,7 @@ lid_t     = 1.6;
 gap       = 0.5;    // board edge to inner wall
 r_out     = 2.5;    // outer corner radius
 standoff_h = 3.0;   // floor to board underside
-top_clear = 14.0;   // board top to lid underside (D1 mini on female headers)
+top_clear = 20.0;   // board top to lid underside: F1 upright (19.3 mm) sets this; 14 was enough with F1 bent over
 rebate_w  = 0.8;    // lid sits flush in this rebate
 lid_clear = 0.15;   // lid to rebate, arm to wall
 
@@ -61,11 +61,12 @@ function prev_edge(s) = let(n = [for (t = slots) if (t[0] == s[0] && t[2] <= s[1
 hooks = [["left", 16.5], ["right", 6], ["back", 7], ["back", 60.5]];
 hook_w      = 5.0;
 hook_t      = 1.2;
-hook_bottom = 12.2;   // z of the arm tip
+hook_len    = 8.0;    // arm length below the lid
 barb        = 0.9;    // how far the barb sticks out
 barb_h      = 2.2;    // ramp height, barb top at hook_bottom + barb_h
 win_w       = 5.6;    // window in the wall
-win_z       = [11.8, 14.5];
+win_below   = 0.4;    // window starts this far below the arm tip
+win_above   = 0.1;    // and ends this far above the barb
 
 /* [Labels] engraved in the lid top: [text, x, y, size, rotation] */
 labels = [
@@ -93,6 +94,8 @@ z_board = floor_t + standoff_h;                    // board underside
 z_btop  = z_board + board_t;                       // board top
 z_lid   = z_btop + top_clear;                      // lid underside
 z_top   = z_lid + lid_t;                           // outer top
+hook_bottom = z_lid - hook_len;                    // z of the arm tip
+win_z   = [hook_bottom - win_below, hook_bottom + barb_h + win_above];
 eps = 0.01;
 
 module rrect(x0, y0, x1, y1, r) {

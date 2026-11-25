@@ -1,6 +1,6 @@
 # DS18B20 pipe holder (cable tie mount)
 
-Status: **test print**, 2026-11-02. Source: [`../mechanical/ds18b20_tie_holder.scad`](../mechanical/ds18b20_tie_holder.scad).
+Status: **test print**, 2026-11-02. Source: [`../mechanical/ds18b20_tie_holder.scad`](../mechanical/ds18b20_tie_holder.scad), print file: [`../mechanical/DS18B20_pipe_holder.stl`](../mechanical/DS18B20_pipe_holder.stl) (flat top on the bed).
 
 ## Goal
 

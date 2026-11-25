@@ -23,7 +23,7 @@ This repo holds both versions: **v2**, the board in use today, and **v3**, a ful
 |---|---|
 | v2 (PCB rev 6) | built and running in the house |
 | v3 | schematic done, PCB placed and routed, DRC clean. Next: stitching vias, silkscreen, final review. **Not ordered.** |
-| v3 enclosure | planned: 3D printable, designed around the v3 board, source in [`mechanical/`](mechanical). Starts once the PCB layout is final |
+| v3 enclosure | draft, not printed: STLs in [`mechanical/`](mechanical), see [`docs/enclosure-v3.md`](docs/enclosure-v3.md) |
 
 ## Two uses for v3
 
@@ -126,7 +126,10 @@ Boards are supplied as **development boards**, not as a finished consumer produc
 | [`docs/schematic-v3.md`](docs/schematic-v3.md) | v3 spec: decisions, nets, BOM with LCSC numbers, layout notes. Source of truth for the schematic |
 | [`docs/v2-as-built.md`](docs/v2-as-built.md) | v2 netlist, pinouts, BOM and known issues, extracted from the EasyEDA project |
 | [`docs/ds18b20-pipe-holder.md`](docs/ds18b20-pipe-holder.md) | 3D printed holder that ties the probes onto the radiator collector |
-| [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder; the v3 enclosure will be added here |
+| [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder; [`DS18B20_pipe_holder.stl`](mechanical/DS18B20_pipe_holder.stl) is the print file |
+| [`docs/enclosure-v3.md`](docs/enclosure-v3.md) | v3 snap fit enclosure: design, open points, checks before printing |
+| [`mechanical/dbe_v3_enclosure.scad`](mechanical/dbe_v3_enclosure.scad) | OpenSCAD source for the v3 enclosure |
+| `mechanical/DBE_v3_enclosure_J1_*.stl`, `_J7_*.stl` | v3 enclosure print files (base + lid), one set per power input, in print orientation |
 | [`docs/DBH-v1-parked.md`](docs/DBH-v1-parked.md) | parked fallback: driver board that keeps the original Jaga fans |
 | [`hardware/v2/`](hardware/v2) | v2 EasyEDA Pro project, Gerbers (upload to JLCPCB as is), PCB render |
 | [`hardware/v3/`](hardware/v3) | v3 EasyEDA project, Gerbers and render, once exported |

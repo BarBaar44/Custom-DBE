@@ -128,6 +128,7 @@ Boards are supplied as **development boards**, not as a finished consumer produc
 | [`docs/ds18b20-pipe-holder.md`](docs/ds18b20-pipe-holder.md) | 3D printed holder that ties the probes onto the radiator collector |
 | [`mechanical/ds18b20_tie_holder.scad`](mechanical/ds18b20_tie_holder.scad) | OpenSCAD source for the holder; [`DS18B20_pipe_holder.stl`](mechanical/DS18B20_pipe_holder.stl) is the print file |
 | [`docs/enclosure-v3.md`](docs/enclosure-v3.md) | v3 snap fit enclosure: design, open points, checks before printing |
+| [`mechanical/dbe_v3_enclosure.scad`](mechanical/dbe_v3_enclosure.scad) | OpenSCAD source for the v3 enclosure |
 | [`mechanical/DBE_v3_enclosure_base.stl`](mechanical/DBE_v3_enclosure_base.stl), [`_lid.stl`](mechanical/DBE_v3_enclosure_lid.stl) | v3 enclosure print files, in print orientation |
 | [`docs/DBH-v1-parked.md`](docs/DBH-v1-parked.md) | parked fallback: driver board that keeps the original Jaga fans |
 | [`hardware/v2/`](hardware/v2) | v2 EasyEDA Pro project, Gerbers (upload to JLCPCB as is), PCB render |

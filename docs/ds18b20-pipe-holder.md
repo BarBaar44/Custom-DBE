@@ -27,7 +27,7 @@ Mount the two DS18B20 probes (J4/J5, `PIPE SENSOR 1/2`) on metal that carries th
 
 Parameters to tune in the .scad: `clear` (probe fit, default 0.15), `protrude`, `tie_w`, `tie_h`.
 
-The .scad has not been rendered in OpenSCAD yet; the test STL came from an identical Python model (manifold3d).
+The STL is exported from the .scad with OpenSCAD (`print_orientation = true`, flat top on the bed).
 
 ## Fitting
 

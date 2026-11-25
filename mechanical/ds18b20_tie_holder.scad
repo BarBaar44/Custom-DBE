@@ -11,6 +11,7 @@ tie_h     = 1.8;   // tunnel height, tie thickness about 1.2 mm
 roof      = 1.2;
 tie_inset = 8;     // tunnel centre from each end
 clear     = 0.15;
+print_orientation = true;   // true: flat top on the bed, ready to export as STL
 
 $fn = 64;
 pr    = probe_d/2;
@@ -19,7 +20,7 @@ z_top = z_tun + tie_h + roof;
 
 module rr(w, h, r) hull() for (sx=[-1,1], sy=[-1,1]) translate([sx*(w/2-r), sy*(h/2-r)]) circle(r);
 
-difference() {
+module holder() difference() {
   hull() {
     translate([length/2, 0, protrude]) linear_extrude(0.01) rr(length, width, 2.5);
     translate([length/2, 0, z_top-2])  linear_extrude(0.01) rr(length, width, 2.5);
@@ -30,3 +31,6 @@ difference() {
   for (x = [tie_inset, length - tie_inset])
     translate([x - tie_w/2, -width/2 - 1, z_tun]) cube([tie_w, width + 2, tie_h]);
 }
+
+if (print_orientation) translate([0, width/2, z_top]) rotate([180, 0, 0]) holder();
+else holder();

@@ -2,7 +2,9 @@
 
 Status: **draft**, 2026-11-03. Not printed yet. Positions from `PickAndPlace_PCB1_2026_11_03.csv`.
 
-Print files: [`../mechanical/DBE_v3_enclosure_base.stl`](../mechanical/DBE_v3_enclosure_base.stl) (upright) and [`../mechanical/DBE_v3_enclosure_lid.stl`](../mechanical/DBE_v3_enclosure_lid.stl) (top face down), both in print orientation, no supports. The parametric OpenSCAD source `dbe_v3_enclosure.scad` is not in this repo yet.
+Source: [`../mechanical/dbe_v3_enclosure.scad`](../mechanical/dbe_v3_enclosure.scad). Print files: [`../mechanical/DBE_v3_enclosure_base.stl`](../mechanical/DBE_v3_enclosure_base.stl) (upright) and [`../mechanical/DBE_v3_enclosure_lid.stl`](../mechanical/DBE_v3_enclosure_lid.stl) (top face down), both in print orientation, no supports.
+
+The .scad was rebuilt on 2026-11-25 from the STLs of 2026-11-03, because the original source was lost. The base matches the old STL exactly; the lid differs by 0.23 mm³, all in the rounding of the engraved letters. Export with `openscad -o base.stl -D 'part="base_print"'` and `-D 'part="lid_print"'`; `assembly`, `exploded` and `plate` are for checking.
 
 **Check before printing:** board 1 now carries a LOLIN S2 mini instead of a D1 mini. The enclosure was designed around a D1 mini on female headers; check the S2 mini stack height, USB position and antenna clearance against the lid first.
 
@@ -15,7 +17,7 @@ Print files: [`../mechanical/DBE_v3_enclosure_base.stl`](../mechanical/DBE_v3_en
 | Lid | flush in a 0.8 mm rebate, 4 snap hooks (top ×2, left at y 16.5, right at y 6) in the mounting hole keep-out zones; release with a small screwdriver through the window |
 | Board fix | no screws: pegs in the base through the M2 holes, lid columns press the board down (column at (64, 3.5) is 3.4 mm, because J6 is close) |
 | Connector slots | open to the top so the board drops in; lid tabs close them above each connector. J4/J5 share one slot, J2/J3/J6 share one slot |
-| Power input | only the fitted input gets a slot: `power_in = "J1"` or `"J7"` |
+| Power input | slot for J7 (screw terminal) only. The old `power_in = "J1"` option was lost with the original source; J1 is not fitted on board 1 |
 | Labels | engraved in the lid: 12V IN, S1 (J4), S2 (J5), FAN 1 + RPM, FAN 2, FAN 3, DBE v3 |
 | Height budget | 14 mm above the board; set by the D1 mini on headers (about 12.7 mm) |
 | Material | PETG or ASA; base upright, lid top face down, no supports |
@@ -38,4 +40,4 @@ The D1 mini sits in 2 × 8 female headers, not soldered, so it stays easy to rep
 5. **Enclosure v2: LED windows** for LED1 (power, at 21.3, 44.9) and LED2 (fans on, at 65.7, 14.4). Dropped from v1 because no transparent filament is in stock. Options: clear 1.75 mm filament or 2 mm acrylic rod as light pipes, commercial round light pipes, or a natural PETG lid with thin spots over the LEDs.
 6. USB on the D1 mini is only reachable with the lid off; updates go over OTA.
 7. D1 mini retention rib and removal clearance: see the section above; not in the model yet.
-8. Add `dbe_v3_enclosure.scad` to `mechanical/`.
+8. Board model in the .scad is a plain plate with holes, no components; collision checks against connectors need the real part heights.

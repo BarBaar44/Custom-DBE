@@ -2,9 +2,16 @@
 
 Status: **draft**, 2026-11-03. Not printed yet. Positions from `PickAndPlace_PCB1_2026_11_03.csv`.
 
-Source: [`../mechanical/dbe_v3_enclosure.scad`](../mechanical/dbe_v3_enclosure.scad). Print files: [`../mechanical/DBE_v3_enclosure_base.stl`](../mechanical/DBE_v3_enclosure_base.stl) (upright) and [`../mechanical/DBE_v3_enclosure_lid.stl`](../mechanical/DBE_v3_enclosure_lid.stl) (top face down), both in print orientation, no supports.
+Source: [`../mechanical/dbe_v3_enclosure.scad`](../mechanical/dbe_v3_enclosure.scad). Two versions, one per power input. Print the one that matches the fitted connector; base and lid belong together.
 
-The .scad was rebuilt on 2026-11-25 from the STLs of 2026-11-03, because the original source was lost. The base matches the old STL exactly; the lid differs by 0.23 mm³, all in the rounding of the engraved letters. Export with `openscad -o base.stl -D 'part="base_print"'` and `-D 'part="lid_print"'`; `assembly`, `exploded` and `plate` are for checking.
+| Power input | Base (upright) | Lid (top face down) |
+|---|---|---|
+| J1 barrel jack (DBE radiators) | [`DBE_v3_enclosure_J1_base.stl`](../mechanical/DBE_v3_enclosure_J1_base.stl) | [`DBE_v3_enclosure_J1_lid.stl`](../mechanical/DBE_v3_enclosure_J1_lid.stl) |
+| J7 screw terminal (Jaga units, board 1) | [`DBE_v3_enclosure_J7_base.stl`](../mechanical/DBE_v3_enclosure_J7_base.stl) | [`DBE_v3_enclosure_J7_lid.stl`](../mechanical/DBE_v3_enclosure_J7_lid.stl) |
+
+All in print orientation, no supports.
+
+The .scad was rebuilt on 2026-11-25 from the STLs of 2026-11-03, because the original source was lost. The old STLs were the J1 version: the J1 base matches them exactly, the J1 lid differs by 0.23 mm³, all in the rounding of the engraved letters. The J7 values (bottom wall, centre x 18, 11 mm slot, 8 mm tall) come from the original source as quoted in the 3 Nov chat. Export with `openscad -o base.stl -D 'part="base_print"'` and `-D 'part="lid_print"'`, each with `-D 'power_in="J1"'` or `"J7"`; `assembly`, `exploded` and `plate` are for checking.
 
 **Check before printing:** board 1 now carries a LOLIN S2 mini instead of a D1 mini. The enclosure was designed around a D1 mini on female headers; check the S2 mini stack height, USB position and antenna clearance against the lid first.
 
@@ -16,8 +23,8 @@ The .scad was rebuilt on 2026-11-25 from the STLs of 2026-11-03, because the ori
 | Walls, floor, lid | 1.6 mm; board to wall gap 0.5 mm |
 | Lid | flush in a 0.8 mm rebate, 4 snap hooks (top ×2, left at y 16.5, right at y 6) in the mounting hole keep-out zones; release with a small screwdriver through the window |
 | Board fix | no screws: pegs in the base through the M2 holes, lid columns press the board down (column at (64, 3.5) is 3.4 mm, because J6 is close) |
-| Connector slots | open to the top so the board drops in; lid tabs close them above each connector. J4/J5 share one slot, J2/J3/J6 share one slot |
-| Power input | slot for J7 (screw terminal) only. The old `power_in = "J1"` option was lost with the original source; J1 is not fitted on board 1 |
+| Connector slots | open to the top so the board drops in; lid tabs close them 0.3 mm above each connector. J4/J5 share one slot, J2/J3/J6 share one slot |
+| Power input | `power_in = "J1"`: 11 mm slot in the left wall, `12V IN` label along the left edge. `power_in = "J7"`: 11 mm slot in the bottom wall at x 18, joined with the fan slot (only 0.4 mm of wall would be left between them), `12V IN` label next to FAN 1. The other input's wall stays closed |
 | Labels | engraved in the lid: 12V IN, S1 (J4), S2 (J5), FAN 1 + RPM, FAN 2, FAN 3, DBE v3 |
 | Height budget | 14 mm above the board; set by the D1 mini on headers (about 12.7 mm) |
 | Material | PETG or ASA; base upright, lid top face down, no supports |
@@ -35,7 +42,7 @@ The D1 mini sits in 2 × 8 female headers, not soldered, so it stays easy to rep
 
 1. F1: bend it over towards +y, with the body about 9.5 to 12.5 mm above the board, over the J5 header. This only works if the J5 header is under about 9 mm. Upright F1 needs `top_clear = 20`, which makes the box 27.8 mm tall.
 2. J1 opening appears to sit about 2.8 mm in from the board edge. Check that the adapter plug seats fully through the 11 mm slot.
-3. Check part heights against the real parts: J1, J4/J5 with plugs, KF2510 headers, D1 mini on its headers.
+3. Check part heights against the real parts: J1, J7 (8 mm assumed), J4/J5 with plugs, KF2510 headers, D1 mini on its headers.
 4. S1/S2 labels assume J4 = PIPE SENSOR 1 and J5 = PIPE SENSOR 2; check against the silkscreen.
 5. **Enclosure v2: LED windows** for LED1 (power, at 21.3, 44.9) and LED2 (fans on, at 65.7, 14.4). Dropped from v1 because no transparent filament is in stock. Options: clear 1.75 mm filament or 2 mm acrylic rod as light pipes, commercial round light pipes, or a natural PETG lid with thin spots over the LEDs.
 6. USB on the D1 mini is only reachable with the lid off; updates go over OTA.

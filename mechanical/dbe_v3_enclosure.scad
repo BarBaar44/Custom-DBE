@@ -3,10 +3,12 @@
 // Board coordinates: origin at the board's lower left corner, top view, mm.
 // Positions follow PickAndPlace_PCB1_2026_11_03.csv. No LED windows (planned for enclosure v2).
 //
+// power_in = "J1" (barrel jack, left wall) or "J7" (screw terminal, bottom wall): only that input gets a slot.
 // part = "assembly" | "exploded" | "base" | "lid" | "base_print" | "lid_print" | "plate" | "board"
 //   base_print, lid_print: print orientation (base upright, lid top face down), export these as STL.
 
 part = "assembly";
+power_in = "J7";    // "J1" or "J7": which power input is fitted on this board
 
 /* [Board] */
 board_w   = 67.5;
@@ -34,14 +36,26 @@ column_d_small = 3.4;
 small_column = [64, 3.5];   // next to J6, so this one is thinner
 
 /* [Connector slots] open to the top, closed by lid tabs above the connector
-   [wall, from, to, tab_bottom_z]  wall: "left" (x = 0 side), "front" (y = 0 side) */
-slots = [
-  ["left",   1.0, 12.0, 18.3],   // J7 screw terminal, 12 V in
-  ["left",  20.87, 50.07, 18.9], // J4 + J5 pipe sensors
-  ["front", 23.9, 62.7, 13.9]    // J2, J3, J6 fan headers
+   [ref, wall, centre along the wall, slot width, connector height above the board]
+   wall: "left" (x = 0 side) or "front" (y = 0 side). Heights are datasheet estimates. */
+connectors = [
+  ["J1",   "left",   6.5,  11.0, 11.8],   // DC barrel jack, plug from the left
+  ["J4J5", "left",  35.47, 29.2, 12.4],   // J4 (y 43) + J5 (y 27.94), one slot
+  ["J7",   "front", 18.0,  11.0,  8.0],   // 2-pin screw terminal, wires from below
+  ["FAN",  "front", 43.3,  38.8,  7.4]    // J2, J3, J6 fan headers, one slot
 ];
+tab_gap   = 0.3;    // lid tab underside above the connector
+merge_web = 2.0;    // slots closer than this on the same wall are joined (no thin wall left)
 tab_clear  = 0.2;   // tab to slot end
 tab_inset  = 0.1;   // tab outer face behind the outer wall face
+
+function used(c) = (c[0] == "J1" || c[0] == "J7") ? c[0] == power_in : true;
+// [wall, from, to, tab_bottom_z]
+slots = [for (c = connectors) if (used(c))
+          [c[1], c[2] - c[3]/2, c[2] + c[3]/2, floor_t + standoff_h + board_t + c[4] + tab_gap]];
+// neighbour on the same wall within merge_web: returns the gap edge, or undef
+function next_edge(s) = let(n = [for (t = slots) if (t[0] == s[0] && t[1] >= s[2] && t[1] - s[2] < merge_web) t[1]]) len(n) ? n[0] : undef;
+function prev_edge(s) = let(n = [for (t = slots) if (t[0] == s[0] && t[2] <= s[1] && s[1] - t[2] < merge_web) t[2]]) len(n) ? n[0] : undef;
 
 /* [Snap hooks] [wall, position along the wall] */
 hooks = [["left", 16.5], ["right", 6], ["back", 7], ["back", 60.5]];
@@ -55,7 +69,6 @@ win_z       = [11.8, 14.5];
 
 /* [Labels] engraved in the lid top: [text, x, y, size, rotation] */
 labels = [
-  ["12V IN", -0.96,  6.5,  2.6, -90],
   ["S2",     -0.96, 27.94, 2.6, -90],
   ["S1",     -0.96, 43.0,  2.6, -90],
   ["FAN 1",  30.73,  1.5,  2.6,   0],
@@ -64,6 +77,7 @@ labels = [
   ["FAN 3",  55.88,  1.54, 2.6,   0],
   ["DBE v3", 50.5,  31.5,  6.0,   0]
 ];
+power_label = power_in == "J1" ? ["12V IN", -0.96, 6.5, 2.6, -90] : ["12V IN", 18.0, 1.5, 2.6, 0];
 label_font  = "Liberation Sans:style=Bold";
 label_depth = 0.5;
 
@@ -102,7 +116,11 @@ module base() {
     translate([0, 0, z_lid]) linear_extrude(z_top)
       rrect(IX0 - rebate_w, IY0 - rebate_w, IX1 + rebate_w, IY1 + rebate_w, r_out - (wall - rebate_w));
     // connector slots, open to the top
-    for (s = slots) wall_cut(s[0], s[1], s[2], z_btop, z_top + 1);
+    for (s = slots) {
+      wall_cut(s[0], s[1], s[2], z_btop, z_top + 1);
+      ne = next_edge(s);
+      if (!is_undef(ne)) wall_cut(s[0], s[2] - eps, ne + eps, z_btop, z_top + 1);   // join close slots
+    }
     // snap windows
     for (h = hooks) wall_cut(h[0], h[1] - win_w/2, h[1] + win_w/2, win_z[0], win_z[1]);
   }
@@ -146,17 +164,21 @@ module lid() {
               IX1 + rebate_w - lid_clear, IY1 + rebate_w - lid_clear, r_out - (wall - rebate_w) - lid_clear);
       // tabs that close the slots above the connectors
       for (s = slots) {
+        // tab ends: clearance at a free slot end, half way into the gap at a joined end
+        pe = prev_edge(s);  ne = next_edge(s);
+        a = is_undef(pe) ? s[1] + tab_clear : (pe + s[1]) / 2;
+        b = is_undef(ne) ? s[2] - tab_clear : (s[2] + ne) / 2;
         if (s[0] == "left")
-          translate([OX0 + tab_inset, s[1] + tab_clear, s[3]]) cube([wall - tab_inset, s[2] - s[1] - 2*tab_clear, z_top - s[3]]);
+          translate([OX0 + tab_inset, a, s[3]]) cube([wall - tab_inset, b - a, z_top - s[3]]);
         if (s[0] == "front")
-          translate([s[1] + tab_clear, OY0 + tab_inset, s[3]]) cube([s[2] - s[1] - 2*tab_clear, wall - tab_inset, z_top - s[3]]);
+          translate([a, OY0 + tab_inset, s[3]]) cube([b - a, wall - tab_inset, z_top - s[3]]);
       }
       // columns that press the board down
       for (p = holes) translate([p[0], p[1], z_btop])
         cylinder(d = (p == small_column) ? column_d_small : column_d, h = top_clear + eps);
       for (h = hooks) hook(h[0], h[1]);
     }
-    translate([0, 0, z_top - label_depth]) linear_extrude(label_depth + 1) for (l = labels) label_2d(l);
+    translate([0, 0, z_top - label_depth]) linear_extrude(label_depth + 1) for (l = concat([power_label], labels)) label_2d(l);
   }
 }
 

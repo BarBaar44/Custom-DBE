@@ -23,7 +23,9 @@ lid_t     = 1.6;
 gap       = 0.5;    // board edge to inner wall
 r_out     = 2.5;    // outer corner radius
 standoff_h = 3.0;   // floor to board underside
-top_clear = 20.0;   // board top to lid underside: F1 upright (19.3 mm) sets this; 14 was enough with F1 bent over
+f1_height = 19.3;   // F1 Littelfuse RUEF400 (C2760163), straight leads: body height B max 19.3 mm (datasheet table, A 14.0 / E 3.0 max)
+f1_margin = 0.7;    // air between F1 and the lid
+top_clear = max(14.0, f1_height + f1_margin);   // board top to lid underside; 14 covers the D1 mini on headers
 rebate_w  = 0.8;    // lid sits flush in this rebate
 lid_clear = 0.15;   // lid to rebate, arm to wall
 
